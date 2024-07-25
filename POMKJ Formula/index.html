@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The POMKJ Formula</title>
+<style>
+    body {
+    font-family: Arial, sans-serif;
+    background-color: #222;
+    color: #fff;
+    margin: 0;
+    padding: 20px;
+}
+
+.calculator {
+    max-width: 600px;
+    margin: 20px auto;
+    background-color: #333;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+}
+
+h1 {
+    text-align: center;
+    color: #fff;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    font-weight: bold;
+    color: #ccc;
+}
+
+.form-group input[type="number"],
+.form-group select {
+    width: 100px;
+    padding: 8px;
+    border: 1px solid #555;
+    border-radius: 4px;
+    background-color: #333;
+    color: #fff;
+}
+
+.form-group select {
+    width: 100%;
+}
+
+.calculate-btn, .reset-btn {
+    background-color: #3498db; /* A vibrant blue */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.calculate-btn:hover {
+    background-color: #2980b9; /* Darker shade on hover */
+}
+
+.reset-btn {
+    background-color: #e74c3c; /* A contrasting red */
+}
+
+.reset-btn:hover {
+    background-color: #c0392b; /* Darker shade on hover */
+}
+
+
+.result {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 18px;
+    color: #fff;
+}
+
+.error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+</style>
+</head>
+<body>
+    <div class="calculator">
+        <h1>The POMKJ Formula</h1>
+        <form id="calcForm">
+            <div class="form-group">
+                <p>Choose a number between 1 and 10:</p>
+                <label for="inputJ">J:</label>
+                <input type="number" id="inputJ" name="j" min="1" max="10" step="0.01" required>
+                <div id="errorJ" class="error-message"></div>
+            </div>
+            <div class="form-group">
+                <label for="inputP">P:</label>
+                <input type="number" id="inputP" name="p" min="1" max="10" step="0.01" required>
+                <div id="errorP" class="error-message"></div>
+            </div>
+            <div class="form-group">
+                <label for="inputO">O:</label>
+                <input type="number" id="inputO" name="o" min="1" max="10" step="0.01" required>
+                <div id="errorO" class="error-message"></div>
+            </div>
+            <div class="form-group">
+                <label for="inputK">K:</label>
+                <input type="number" id="inputK" name="k" min="1" max="10" step="0.01" required>
+                <div id="errorK" class="error-message"></div>
+            </div>
+            <div class="form-group">
+                <p>Please choose a number between 1 and 2:</p>
+                <label for="inputM">M:</label>
+                <input type="number" id="inputM" name="m" min="1" max="2" step="0.01" required>
+                <div id="errorM" class="error-message"></div>
+            </div>
+            <button type="button" class="calculate-btn" onclick="calculate()">Calculate</button>
+            <button type="button" class="reset-btn" onclick="resetForm()">Reset</button>
+        </form>
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        function calculate() {
+            // Clear previous error messages
+            clearErrors();
+
+            // Retrieve input values
+            const j = parseFloat(document.getElementById('inputJ').value);
+            const p = parseFloat(document.getElementById('inputP').value);
+            const o = parseFloat(document.getElementById('inputO').value);
+            const k = parseFloat(document.getElementById('inputK').value);
+            const m = parseFloat(document.getElementById('inputM').value);
+
+            // Validate inputs
+            let isValid = true;
+
+            if (j < 1 || j > 10) {
+                isValid = false;
+                document.getElementById('errorJ').textContent = "Please enter a number between 1 and 10.";
+            }
+
+            if (p < 1 || p > 10) {
+                isValid = false;
+                document.getElementById('errorP').textContent = "Please enter a number between 1 and 10.";
+            }
+
+            if (o < 1 || o > 10) {
+                isValid = false;
+                document.getElementById('errorO').textContent = "Please enter a number between 1 and 10.";
+            }
+
+            if (k < 1 || k > 10) {
+                isValid = false;
+                document.getElementById('errorK').textContent = "Please enter a number between 1 and 10.";
+            }
+
+            if (m < 1 || m > 2) {
+                isValid = false;
+                document.getElementById('errorM').textContent = "Please enter a number between 1 and 2.";
+            }
+
+            // If inputs are valid, perform calculations
+            if (isValid) {
+                const jResult = 2 * j;
+                const pResult = 1.75 * p;
+                const oResult = 1.5 * o;
+                const kResult = 1.25 * k;
+                const sum = jResult + pResult + oResult + kResult;
+                const result = (sum / m) * 1.5384615385;
+                document.getElementById('result').textContent = `Result: ${result.toFixed(2)}`;
+            }
+        }
+
+        function resetForm() {
+            // Clear all input fields and result
+            document.getElementById('calcForm').reset();
+            document.getElementById('result').textContent = "";
+            clearErrors();
+        }
+
+        function clearErrors() {
+            document.getElementById('errorJ').textContent = "";
+            document.getElementById('errorP').textContent = "";
+            document.getElementById('errorO').textContent = "";
+            document.getElementById('errorK').textContent = "";
+            document.getElementById('errorM').textContent = "";
+        }
+    </script>
+</body>
+</html>
+
